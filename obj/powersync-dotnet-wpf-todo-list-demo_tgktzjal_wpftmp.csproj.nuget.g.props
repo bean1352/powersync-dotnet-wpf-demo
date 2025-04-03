@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Dean\.nuget\packages\</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.13.1</NuGetToolVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <SourceRoot Include="C:\Users\Dean\.nuget\packages\" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\linux-arm64\native\libpowersync.so" Condition="Exists('$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\linux-arm64\native\libpowersync.so')">
+      <NuGetPackageId>PowerSync.Common</NuGetPackageId>
+      <NuGetPackageVersion>0.0.2-alpha.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>runtimes\linux-arm64\native\libpowersync.so</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\linux-x64\native\libpowersync.so" Condition="Exists('$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\linux-x64\native\libpowersync.so')">
+      <NuGetPackageId>PowerSync.Common</NuGetPackageId>
+      <NuGetPackageVersion>0.0.2-alpha.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>runtimes\linux-x64\native\libpowersync.so</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\osx-arm64\native\libpowersync.dylib" Condition="Exists('$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\osx-arm64\native\libpowersync.dylib')">
+      <NuGetPackageId>PowerSync.Common</NuGetPackageId>
+      <NuGetPackageVersion>0.0.2-alpha.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>runtimes\osx-arm64\native\libpowersync.dylib</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\osx-x64\native\libpowersync.dylib" Condition="Exists('$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\osx-x64\native\libpowersync.dylib')">
+      <NuGetPackageId>PowerSync.Common</NuGetPackageId>
+      <NuGetPackageVersion>0.0.2-alpha.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>runtimes\osx-x64\native\libpowersync.dylib</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\win-x64\native\powersync.dll" Condition="Exists('$(NuGetPackageRoot)powersync.common\0.0.2-alpha.1\contentFiles\any\net9.0\runtimes\win-x64\native\powersync.dll')">
+      <NuGetPackageId>PowerSync.Common</NuGetPackageId>
+      <NuGetPackageVersion>0.0.2-alpha.1</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>runtimes\win-x64\native\powersync.dll</Link>
+    </Content>
+  </ItemGroup>
+</Project>
