@@ -10,8 +10,15 @@ namespace PowersyncDotnetTodoList;
 
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    // public MainWindow()
+    // {
+    //     InitializeComponent();
+    // }
+    public MainWindow(MainWindowViewModel viewModel)
     {
         InitializeComponent();
+
+        // Set the DataContext to the view model
+        this.DataContext = viewModel;
     }
 }

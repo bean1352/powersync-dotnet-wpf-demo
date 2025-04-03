@@ -7,7 +7,7 @@ namespace PowersyncDotnetTodoList.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly PowerSyncDatabase _db;
-        private bool _connected;
+        private bool _connected = false;
 
         public bool Connected
         {

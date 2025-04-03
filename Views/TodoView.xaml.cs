@@ -1,6 +1,4 @@
 using System.Windows.Controls;
-using Microsoft.Extensions.DependencyInjection;
-using PowersyncDotnetTodoList.ViewModels;
 
 namespace PowersyncDotnetTodoList.Views
 {

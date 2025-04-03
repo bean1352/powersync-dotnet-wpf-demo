@@ -38,6 +38,5 @@ class AppSchema
 
     public static Schema PowerSyncSchema = new Schema(
         new Dictionary<string, Table> { { "todos", Todos }, { "lists", Lists } }
-    // new Dictionary<string, Table> { { "lists", Lists } }
     );
 }

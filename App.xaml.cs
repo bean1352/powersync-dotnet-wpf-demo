@@ -31,6 +31,7 @@ namespace PowersyncDotnetTodoList
             await db.Connect(connector);
             await db.WaitForFirstSync();
 
+
             // // Resolve and show MainWindow
             // var mainWindow = Services.GetRequiredService<MainWindow>();
             // mainWindow.Show();
@@ -38,6 +39,7 @@ namespace PowersyncDotnetTodoList
 
             // Navigate to initial view
             var navigationService = Services.GetRequiredService<INavigationService>();
+            // navigationService.Navigate<MainWindowViewModel>();
             navigationService.Navigate<TodoListViewModel>();
 
             mainWindow.Show();
@@ -45,16 +47,22 @@ namespace PowersyncDotnetTodoList
 
         private void ConfigureServices(IServiceCollection services)
         {
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole(); // Enable console logging
+                builder.SetMinimumLevel(LogLevel.Information); // Set minimum log level
+            });
+
             // Register PowerSyncDatabase
             services.AddSingleton<PowerSyncDatabase>(sp =>
             {
-                //var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger("PowerSyncLogger");
+                var logger = loggerFactory.CreateLogger("PowerSyncLogger");
                 return new PowerSyncDatabase(
                     new PowerSyncDatabaseOptions
                     {
                         Database = new SQLOpenOptions { DbFilename = "example.db" },
                         Schema = AppSchema.PowerSyncSchema,
-                        //Logger = logger,
+                        Logger = logger,
                     }
                 );
             });
@@ -72,7 +80,7 @@ namespace PowersyncDotnetTodoList
             services.AddTransient<TodoViewModel>();
             services.AddTransient<TodoListView>();
             services.AddTransient<TodoView>();
-            services.AddTransient<MainWindowViewModel>();
+            // services.AddTransient<MainWindowViewModel>();
 
 
             // services.AddSingleton<TodoList>();
@@ -80,7 +88,8 @@ namespace PowersyncDotnetTodoList
 
             // Register MainWindow as a singleton
             services.AddSingleton<MainWindow>();
-            // services.AddSingleton<MainWindowViewModel>();
+            //  services.AddTransient<MainWindow>();
+            services.AddSingleton<MainWindowViewModel>();
 
             services.AddSingleton<INavigationService>(sp =>
             {
