@@ -8,11 +8,14 @@ namespace PowersyncDotnetTodoList.ViewModels
 {
     public class TodoViewModel : ViewModelBase
     {
+        #region Fields
         private readonly PowerSyncDatabase _db;
         private readonly PowerSyncConnector _connector;
         private readonly INavigationService _navigationService;
         private TodoList? _list;
+        #endregion
 
+        #region Properties
         public ObservableCollection<Todo> Todos { get; } = new();
 
         private Todo? _selectedTodo;
@@ -50,12 +53,16 @@ namespace PowersyncDotnetTodoList.ViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion
 
+        #region Commands
         public ICommand AddTodoCommand { get; }
         public ICommand DeleteTodoCommand { get; }
         public ICommand ToggleCompleteCommand { get; }
         public ICommand BackCommand { get; }
+        #endregion
 
+        #region Constructor
         public TodoViewModel(
             IPowerSyncDatabase db,
             PowerSyncConnector connector,
@@ -83,11 +90,13 @@ namespace PowersyncDotnetTodoList.ViewModels
             );
             BackCommand = new RelayCommand(GoBack);
         }
+        #endregion
 
+        #region Methods
         public void SetList(TodoList list)
         {
             _list = list;
-            _listName = list.name;
+            _listName = list.Name;
             LoadTodos();
             WatchForChanges();
         }
@@ -96,7 +105,7 @@ namespace PowersyncDotnetTodoList.ViewModels
         {
             await _db.Watch(
                 "SELECT * FROM todos where list_id = ? ORDER BY created_at;",
-                [_list!.id],
+                [_list!.Id],
                 new WatchHandler<Todo>
                 {
                     OnResult = (results) =>
@@ -126,7 +135,7 @@ namespace PowersyncDotnetTodoList.ViewModels
         {
             var todos = await _db.GetAll<Todo>(
                 "SELECT * FROM todos where list_id = ? ORDER BY created_at;",
-                [_list!.id]
+                [_list!.Id]
             );
             Todos.Clear();
             foreach (var todo in todos)
@@ -141,7 +150,7 @@ namespace PowersyncDotnetTodoList.ViewModels
             {
                 await _db.Execute(
                     "INSERT INTO todos (id, description, completed, created_at, list_id) VALUES (uuid(), ?, 0, datetime(), ?);",
-                    [todoName, _list!.id]
+                    [todoName, _list!.Id]
                 );
                 LoadTodos();
                 NewTodoName = "";
@@ -150,19 +159,19 @@ namespace PowersyncDotnetTodoList.ViewModels
 
         private async Task DeleteTodo(Todo todo)
         {
-            await _db.Execute("DELETE FROM todos WHERE id = ?;", [todo.id]);
+            await _db.Execute("DELETE FROM todos WHERE id = ?;", [todo.Id]);
             Todos.Remove(todo);
         }
 
         private async Task ToggleComplete(Todo todo)
         {
             // Toggle the completed state
-            var newCompletionState = todo.completed ? 1 : 0;
+            var newCompletionState = todo.Completed ? 1 : 0;
 
             // Update the database with the new completion state
             await _db.Execute(
                 "UPDATE todos SET completed = ? WHERE id = ?;",
-                [newCompletionState, todo.id]
+                [newCompletionState, todo.Id]
             );
         }
 
@@ -171,5 +180,6 @@ namespace PowersyncDotnetTodoList.ViewModels
             // Navigate back to the TodoList view
             _navigationService.GoBack();
         }
+        #endregion
     }
 }

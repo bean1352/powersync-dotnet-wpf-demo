@@ -86,7 +86,7 @@
 
                                     <!-- List Name -->
                                     <TextBlock Grid.Row="0"
-                                               Text="{Binding name}"
+                                               Text="{Binding Name}"
                                                FontSize="16"
                                                FontWeight="SemiBold"
                                                Foreground="#333"
@@ -99,13 +99,13 @@
                                         <TextBlock FontSize="12"
                                                    Foreground="#555">
                                             <Run Text="Pending: "/>
-                                            <Run Text="{Binding pending_tasks}"/>
+                                            <Run Text="{Binding PendingTasks}"/>
                                         </TextBlock>
                                         <TextBlock FontSize="12"
                                                    Foreground="#555"
                                                    Margin="15,0,0,0">
                                             <Run Text="Completed: "/>
-                                            <Run Text="{Binding completed_tasks}"/>
+                                            <Run Text="{Binding CompletedTasks}"/>
                                         </TextBlock>
                                     </StackPanel>
 

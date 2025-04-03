@@ -108,7 +108,7 @@
 
                                     <!-- Task Description -->
                                     <TextBlock Grid.Row="0"
-                                               Text="{Binding description}"
+                                               Text="{Binding Description}"
                                                FontSize="14"
                                                Foreground="#333"
                                                Padding="5"
@@ -128,7 +128,7 @@
 
                                         <!-- Checkbox for completion -->
                                         <CheckBox Grid.Column="0"
-                                                  IsChecked="{Binding completed}"
+                                                  IsChecked="{Binding Completed}"
                                                   Command="{Binding DataContext.ToggleCompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                   CommandParameter="{Binding}"
                                                   VerticalAlignment="Center"

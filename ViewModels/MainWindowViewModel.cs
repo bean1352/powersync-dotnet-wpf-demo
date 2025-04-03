@@ -6,9 +6,12 @@ namespace PowersyncDotnetTodoList.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        #region Fields
         private readonly PowerSyncDatabase _db;
         private bool _connected = false;
+        #endregion
 
+        #region Properties
         public bool Connected
         {
             get => _connected;
@@ -21,7 +24,9 @@ namespace PowersyncDotnetTodoList.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region Constructor
         public MainWindowViewModel(PowerSyncDatabase db)
         {
             _db = db;
@@ -36,5 +41,6 @@ namespace PowersyncDotnetTodoList.ViewModels
                 }
             );
         }
+        #endregion
     }
 }

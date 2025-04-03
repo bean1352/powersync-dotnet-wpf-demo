@@ -1,7 +1,12 @@
+using System.Text.Json.Serialization;
+
 namespace PowersyncDotnetTodoList.Models;
 
 public class TodoListWithStats : TodoList
 {
-    public int pending_tasks { get; set; }
-    public int completed_tasks { get; set; }
+    [JsonPropertyName("pending_tasks")]
+    public int PendingTasks { get; set; } = 0;
+
+    [JsonPropertyName("completed_tasks")]
+    public int CompletedTasks { get; set; } = 0;
 }

@@ -1,11 +1,30 @@
+using System.Text.Json.Serialization;
+
+namespace PowersyncDotnetTodoList.Models;
+
 public class Todo
 {
-    public string id { get; init; }
-    public string list_id { get; init; }
-    public string description { get; set; }
-    public string created_at { get; init; }
-    public string created_by { get; init; }
-    public bool completed { get; set; }
-    public string? completed_at { get; set; }
-    public string? completed_by { get; set; }
+    [JsonPropertyName("id")]
+    public string Id { get; init; } = string.Empty;
+
+    [JsonPropertyName("list_id")]
+    public string ListId { get; init; } = string.Empty;
+
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = string.Empty;
+
+    [JsonPropertyName("created_at")]
+    public string CreatedAt { get; init; } = string.Empty;
+
+    [JsonPropertyName("created_by")]
+    public string CreatedBy { get; init; } = string.Empty;
+
+    [JsonPropertyName("completed")]
+    public bool Completed { get; set; } = false;
+
+    [JsonPropertyName("completed_at")]
+    public string CompletedAt { get; set; } = string.Empty;
+
+    [JsonPropertyName("completed_by")]
+    public string CompletedBy { get; set; } = string.Empty;
 }

@@ -12,7 +12,7 @@ namespace PowersyncDotnetTodoList
 {
     public partial class App : Application
     {
-        public static IServiceProvider Services { get; private set; }
+        public static IServiceProvider? Services { get; private set; }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -31,15 +31,9 @@ namespace PowersyncDotnetTodoList
             await db.Connect(connector);
             await db.WaitForFirstSync();
 
-
-            // // Resolve and show MainWindow
-            // var mainWindow = Services.GetRequiredService<MainWindow>();
-            // mainWindow.Show();
             var mainWindow = Services.GetRequiredService<MainWindow>();
 
-            // Navigate to initial view
             var navigationService = Services.GetRequiredService<INavigationService>();
-            // navigationService.Navigate<MainWindowViewModel>();
             navigationService.Navigate<TodoListViewModel>();
 
             mainWindow.Show();
@@ -49,8 +43,8 @@ namespace PowersyncDotnetTodoList
         {
             ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
             {
-                builder.AddConsole(); // Enable console logging
-                builder.SetMinimumLevel(LogLevel.Information); // Set minimum log level
+                builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Information);
             });
 
             // Register PowerSyncDatabase
@@ -80,15 +74,8 @@ namespace PowersyncDotnetTodoList
             services.AddTransient<TodoViewModel>();
             services.AddTransient<TodoListView>();
             services.AddTransient<TodoView>();
-            // services.AddTransient<MainWindowViewModel>();
 
-
-            // services.AddSingleton<TodoList>();
-            // services.AddSingleton<Todo>();
-
-            // Register MainWindow as a singleton
             services.AddSingleton<MainWindow>();
-            //  services.AddTransient<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();
 
             services.AddSingleton<INavigationService>(sp =>

@@ -50,7 +50,7 @@ namespace PowersyncDotnetTodoList.Services
             Navigate<T>(null);
         }
 
-        public void Navigate<T>(object parameter)
+        public void Navigate<T>(object? parameter)
             where T : class
         {
             var viewModelType = typeof(T);
@@ -103,7 +103,7 @@ namespace PowersyncDotnetTodoList.Services
                 // If the ViewModel implements INavigationAware, call OnNavigatedTo
                 if (viewModel is INavigationAware navigationAware)
                 {
-                    navigationAware.OnNavigatedTo(parameter);
+                    navigationAware.OnNavigatedTo(parameter!);
                 }
             }
             catch (Exception ex)
@@ -124,39 +124,8 @@ namespace PowersyncDotnetTodoList.Services
         }
     }
 
-    // Optional interface for ViewModels that need to respond to navigation
     public interface INavigationAware
     {
         void OnNavigatedTo(object parameter);
     }
 }
-
-// public interface INavigationService
-// {
-//     void NavigateTo<T>()
-//         where T : Page;
-//     void NavigateTo<T>(object parameter)
-//         where T : Page;
-// }
-
-// public class NavigationService : INavigationService
-// {
-//     private readonly Frame _frame;
-
-//     public NavigationService(Frame frame)
-//     {
-//         _frame = frame;
-//     }
-
-//     public void NavigateTo<T>()
-//         where T : Page
-//     {
-//         _frame.Navigate(typeof(T));
-//     }
-
-//     public void NavigateTo<T>(object parameter)
-//         where T : Page
-//     {
-//         _frame.Navigate(typeof(T), parameter);
-//     }
-// }

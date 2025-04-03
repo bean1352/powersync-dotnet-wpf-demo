@@ -10,10 +10,13 @@ namespace PowersyncDotnetTodoList.ViewModels
 {
     public class TodoListViewModel : ViewModelBase
     {
+        #region Fields
         private readonly PowerSyncDatabase _db;
         private readonly PowerSyncConnector _connector;
         private readonly INavigationService _navigationService;
+        #endregion
 
+        #region Properties
         public ObservableCollection<TodoList> TodoLists { get; } = [];
         private TodoList? _selectedList;
 
@@ -30,6 +33,7 @@ namespace PowersyncDotnetTodoList.ViewModels
                 }
             }
         }
+
         private string _newListName = "";
         public string NewListName
         {
@@ -43,10 +47,14 @@ namespace PowersyncDotnetTodoList.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region Commands
         public ICommand AddListCommand { get; }
         public ICommand DeleteListCommand { get; }
+        #endregion
 
+        #region Constructor
         public TodoListViewModel(
             PowerSyncDatabase db,
             PowerSyncConnector connector,
@@ -80,7 +88,9 @@ namespace PowersyncDotnetTodoList.ViewModels
             WatchForChanges();
             LoadTodoLists();
         }
+        #endregion
 
+        #region Methods
         private async void LoadTodoLists()
         {
             var query =
@@ -88,8 +98,8 @@ namespace PowersyncDotnetTodoList.ViewModels
                 SELECT 
                     l.*, 
                     COUNT(t.id) AS total_tasks, 
-                    SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
-                    SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks,
+                    SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS CompletedTasks,
+                    SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS PendingTasks,
                     MAX(t.completed_at) AS last_completed_at
                 FROM 
                     lists l
@@ -119,8 +129,8 @@ namespace PowersyncDotnetTodoList.ViewModels
                 SELECT 
                     l.*, 
                     COUNT(t.id) AS total_tasks, 
-                    SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
-                    SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks,
+                    SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS CompletedTasks,
+                    SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS PendingTasks,
                     MAX(t.completed_at) AS last_completed_at
                 FROM 
                     lists l
@@ -172,7 +182,7 @@ namespace PowersyncDotnetTodoList.ViewModels
 
         private async Task DeleteList(TodoList list)
         {
-            await _db.Execute("DELETE FROM lists WHERE id = ?;", [list.id]);
+            await _db.Execute("DELETE FROM lists WHERE id = ?;", [list.Id]);
             TodoLists.Remove(list);
         }
 
@@ -183,5 +193,6 @@ namespace PowersyncDotnetTodoList.ViewModels
                 _navigationService.Navigate<TodoViewModel>(selectedList);
             }
         }
+        #endregion
     }
 }
