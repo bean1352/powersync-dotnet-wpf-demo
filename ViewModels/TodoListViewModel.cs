@@ -85,18 +85,21 @@ namespace PowersyncDotnetTodoList.ViewModels
         {
             var query =
                 @"
-                    SELECT 
-                        l.*, 
-                        COUNT(t.id) AS total_tasks, 
-                        SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
-                        SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks
-                    FROM 
-                        lists l
-                    LEFT JOIN todos t
-                        ON l.id = t.list_id
-                    GROUP BY 
-                        l.id;
-                ";
+                SELECT 
+                    l.*, 
+                    COUNT(t.id) AS total_tasks, 
+                    SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
+                    SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks,
+                    MAX(t.completed_at) AS last_completed_at
+                FROM 
+                    lists l
+                LEFT JOIN todos t
+                    ON l.id = t.list_id
+                GROUP BY 
+                    l.id
+                ORDER BY 
+                    last_completed_at DESC NULLS LAST;
+            ";
 
             var lists = await _db.GetAll<TodoListWithStats>(query);
             TodoLists.Clear();
@@ -113,18 +116,21 @@ namespace PowersyncDotnetTodoList.ViewModels
         {
             var query =
                 @"
-                    SELECT 
-                        l.*, 
-                        COUNT(t.id) AS total_tasks, 
-                        SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
-                        SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks
-                    FROM 
-                        lists l
-                    LEFT JOIN todos t
-                        ON l.id = t.list_id
-                    GROUP BY 
-                        l.id;
-                ";
+                SELECT 
+                    l.*, 
+                    COUNT(t.id) AS total_tasks, 
+                    SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
+                    SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks,
+                    MAX(t.completed_at) AS last_completed_at
+                FROM 
+                    lists l
+                LEFT JOIN todos t
+                    ON l.id = t.list_id
+                GROUP BY 
+                    l.id
+                ORDER BY 
+                    last_completed_at DESC NULLS LAST;
+";
 
             await _db.Watch(
                 query,

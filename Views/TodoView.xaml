@@ -4,54 +4,136 @@
       xmlns:vm="clr-namespace:PowersyncDotnetTodoList.ViewModels"
       Title="To-Do Items">
 
-    <Grid>
-        <!-- Back Button at the top -->
-        <Button Content="Back"
-                Command="{Binding BackCommand}"
-                Width="100"
-                Height="30"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Margin="10"/>
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Back Button -->
+            <RowDefinition Height="Auto"/> <!-- List Name -->
+            <RowDefinition Height="*"/>   <!-- To-Do List Content -->
+        </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding ListName}"
+        <!-- Back Button -->
+        <Button Grid.Row="0"
+                Content="← Back"
+                Command="{Binding BackCommand}"
+                Width="120"
+                Height="40"
+                Background="#2196F3"
+                Foreground="White"
+                FontSize="14"
+                FontWeight="Bold"
+                BorderThickness="0"
+                Cursor="Hand"
+                HorizontalAlignment="Left"
+                Margin="20,20,0,10"/>
+
+        <!-- List Name -->
+        <TextBlock Grid.Row="1"
+                   Text="{Binding ListName}"
+                   FontSize="22"
                    FontWeight="Bold"
-                   FontSize="18"
+                   Foreground="#333"
                    HorizontalAlignment="Center"
                    Margin="0,10,0,10"/>
 
-        <!-- StackPanel moved down with margin instead of VerticalOffset -->
-        <StackPanel Margin="10,50,10,10"> <!-- Adjusted top margin to create space -->
-            <TextBox Text="{Binding NewTodoName, UpdateSourceTrigger=PropertyChanged}"
-                     Width="300"
-                     Height="30"/>
-            <Button Content="Add"
-                    Command="{Binding AddTodoCommand}"
-                    CommandParameter="{Binding NewTodoName}"
-                    Width="100"
-                    Height="30"
-                    Margin="0,5,0,10"/>
-            
-            <ListBox ItemsSource="{Binding Todos}"
-                     SelectedItem="{Binding SelectedTodo, Mode=TwoWay}"
-                     Width="500"
-                     Height="300">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding completed}"
-                                      Command="{Binding DataContext.ToggleCompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                      CommandParameter="{Binding}"/>
-                            <TextBlock Text="{Binding description}"
-                                        Width="350"/>
-                            <Button Content="Delete"
-                                    Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                    CommandParameter="{Binding}"
-                                    Width="80"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+        <!-- To-Do List Section -->
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="8"
+                Margin="20"
+                Padding="20"
+                BorderBrush="#DDDDDD"
+                BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- Input Field -->
+                    <RowDefinition Height="Auto"/> <!-- Add Button -->
+                    <RowDefinition Height="*"/>   <!-- ListBox (Takes remaining space) -->
+                </Grid.RowDefinitions>
+
+                <!-- Input for new to-do -->
+                <TextBox Grid.Row="0"
+                         Text="{Binding NewTodoName, UpdateSourceTrigger=PropertyChanged}"
+                         Width="300"
+                         Height="35"
+                         FontSize="14"
+                         Padding="5"
+                         Margin="0,0,0,10"
+                         BorderBrush="#CCCCCC"/>
+
+                <!-- Add To-Do Button -->
+                <Button Grid.Row="1"
+                        Content="Add Task"
+                        Command="{Binding AddTodoCommand}"
+                        CommandParameter="{Binding NewTodoName}"
+                        Width="120"
+                        Height="40"
+                        Background="#2196F3"
+                        Foreground="White"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Margin="0,0,0,15"/>
+
+                <!-- To-Do Items List -->
+                <ListBox Grid.Row="2"
+                         ItemsSource="{Binding Todos}"
+                         SelectedItem="{Binding SelectedTodo, Mode=TwoWay}"
+                         Background="White"
+                         BorderBrush="#CCCCCC"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#FAFAFA"
+                                    Padding="10"
+                                    Margin="0,5,0,0"
+                                    CornerRadius="6"
+                                    BorderBrush="#DDDDDD"
+                                    BorderThickness="1"
+                                    HorizontalAlignment="Stretch"
+                                    Width="Auto">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            Margin="5">
+                                    
+                                    <!-- Checkbox for completion -->
+                                    <CheckBox IsChecked="{Binding completed}"
+                                              Command="{Binding DataContext.ToggleCompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                              CommandParameter="{Binding}"
+                                              VerticalAlignment="Center"
+                                              Margin="5"/>
+
+                                    <!-- Task Description -->
+                                    <TextBlock Text="{Binding description}"
+                                               FontSize="14"
+                                               Foreground="#333"
+                                               VerticalAlignment="Center"
+                                               Padding="5"
+                                               Width="Auto"
+                                               TextWrapping="Wrap"/>
+
+                                    <!-- Delete Button -->
+                                    <Button Content="Delete"
+                                            Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}"
+                                            Width="80"
+                                            Height="30"
+                                            Background="Red"
+                                            Foreground="White"
+                                            FontSize="12"
+                                            FontWeight="Bold"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

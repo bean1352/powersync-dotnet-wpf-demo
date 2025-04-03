@@ -3,54 +3,123 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:vm="clr-namespace:PowersyncDotnetTodoList.ViewModels"
       Title="To-Do Lists">
-    
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBox Text="{Binding NewListName, UpdateSourceTrigger=PropertyChanged}"
-                     Width="300"
-                     Height="30"/>
-            <Button Content="Add List"
-                    Command="{Binding AddListCommand}"
-                    CommandParameter="{Binding NewListName}"
-                    Width="100"
-                    Height="30"
-                    Margin="0,5,0,10"/>
 
-            <ListBox ItemsSource="{Binding TodoLists}"
-                     SelectedItem="{Binding SelectedList, Mode=TwoWay}"
-                     Width="500"
-                     Height="300">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical" Width="500">
-                            <!-- Display List Name -->
-                            <TextBlock Text="{Binding name}" Width="350" FontWeight="Bold" FontSize="13"/>
+    <Grid Background="#F5F5F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                            <!-- Display Pending and Completed Tasks -->
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <TextBlock FontSize="10">
-                                    <Run Text="Pending Tasks: "/>
-                                    <Run Text="{Binding pending_tasks}"/>
-                                </TextBlock>
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="Your To-Do Lists"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Foreground="#333"
+                   HorizontalAlignment="Center"
+                   Margin="0,20,0,10"/>
 
-                                <TextBlock Margin="10,0,0,0" FontSize="10">
-                                    <Run Text="Completed Tasks: "/>
-                                    <Run Text="{Binding completed_tasks}"/>
-                                </TextBlock>
-                            </StackPanel>
+        <!-- Main Content -->
+        <Border Grid.Row="1"
+                Background="White"
+                CornerRadius="8"
+                Margin="20"
+                Padding="20"
+                BorderBrush="#DDDDDD"
+                BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- Input Field -->
+                    <RowDefinition Height="Auto"/> <!-- Add Button -->
+                    <RowDefinition Height="*"/>   <!-- ListBox (Takes remaining space) -->
+                </Grid.RowDefinitions>
 
-                            <!-- Delete Button -->
-                            <Button Content="Delete"
-                                    Command="{Binding DataContext.DeleteListCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                    CommandParameter="{Binding}"
-                                    Width="80"
-                                    Background="Red"
-                                    Foreground="White"
-                                    Margin="0,5,0,10"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+                <!-- Input for new list -->
+                <TextBox Grid.Row="0"
+                         Text="{Binding NewListName, UpdateSourceTrigger=PropertyChanged}"
+                         Width="300"
+                         Height="35"
+                         FontSize="14"
+                         Padding="5"
+                         Margin="0,0,0,10"
+                         BorderBrush="#CCCCCC"/>
+
+                <!-- Add List Button -->
+                <Button Grid.Row="1"
+                        Content="Add List"
+                        Command="{Binding AddListCommand}"
+                        CommandParameter="{Binding NewListName}"
+                        Width="120"
+                        Height="40"
+                        Background="#2196F3"
+                        Foreground="White"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Margin="0,0,0,15"/>
+
+                <!-- To-Do Lists -->
+                <ListBox Grid.Row="2"
+                         ItemsSource="{Binding TodoLists}"
+                         SelectedItem="{Binding SelectedList, Mode=TwoWay}"
+                         Background="White"
+                         BorderBrush="#CCCCCC"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#FAFAFA"
+                                    Padding="10"
+                                    Margin="0,5,0,0"
+                                    CornerRadius="6"
+                                    BorderBrush="#DDDDDD"
+                                    BorderThickness="1"
+                                    HorizontalAlignment="Stretch"
+                                    Width="Auto">
+                                <StackPanel Width="Auto">
+                                    <!-- List Name -->
+                                    <TextBlock Text="{Binding name}"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               Foreground="#333"/>
+
+                                    <!-- Task Info -->
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="0,5,0,10">
+                                        <TextBlock FontSize="12" Foreground="#555">
+                                            <Run Text="Pending: "/>
+                                            <Run Text="{Binding pending_tasks}"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="12"
+                                                   Foreground="#555"
+                                                   Margin="15,0,0,0">
+                                            <Run Text="Completed: "/>
+                                            <Run Text="{Binding completed_tasks}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <!-- Buttons -->
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Content="Delete"
+                                                Command="{Binding DataContext.DeleteListCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                CommandParameter="{Binding}"
+                                                Width="80"
+                                                Height="30"
+                                                Background="Red"
+                                                Foreground="White"
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                BorderThickness="0"
+                                                Cursor="Hand"
+                                                Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
