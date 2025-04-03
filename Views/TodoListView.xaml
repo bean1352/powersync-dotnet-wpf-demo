@@ -3,10 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:vm="clr-namespace:PowersyncDotnetTodoList.ViewModels"
       Title="To-Do Lists">
-    <!-- <Page.DataContext>
-        <vm:TodoListViewModel/>
-    </Page.DataContext> -->
-
+    
     <Grid>
         <StackPanel Margin="10">
             <TextBox Text="{Binding NewListName, UpdateSourceTrigger=PropertyChanged}"
@@ -19,28 +16,41 @@
                     Height="30"
                     Margin="0,5,0,10"/>
 
-
             <ListBox ItemsSource="{Binding TodoLists}"
                      SelectedItem="{Binding SelectedList, Mode=TwoWay}"
                      Width="500"
                      Height="300">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal"
-                                Width="500">
-                            <TextBlock Text="{Binding name}"
-                                    Width="350"/>
+                        <StackPanel Orientation="Vertical" Width="500">
+                            <!-- Display List Name -->
+                            <TextBlock Text="{Binding name}" Width="350" FontWeight="Bold" FontSize="13"/>
+
+                            <!-- Display Pending and Completed Tasks -->
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock FontSize="10">
+                                    <Run Text="Pending Tasks: "/>
+                                    <Run Text="{Binding pending_tasks}"/>
+                                </TextBlock>
+
+                                <TextBlock Margin="10,0,0,0" FontSize="10">
+                                    <Run Text="Completed Tasks: "/>
+                                    <Run Text="{Binding completed_tasks}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <!-- Delete Button -->
                             <Button Content="Delete"
                                     Command="{Binding DataContext.DeleteListCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                     CommandParameter="{Binding}"
                                     Width="80"
                                     Background="Red"
-                                    Foreground="White"/>
+                                    Foreground="White"
+                                    Margin="0,5,0,10"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
         </StackPanel>
     </Grid>
 </Page>

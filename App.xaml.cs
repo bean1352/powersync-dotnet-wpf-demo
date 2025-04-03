@@ -41,14 +41,6 @@ namespace PowersyncDotnetTodoList
             navigationService.Navigate<TodoListViewModel>();
 
             mainWindow.Show();
-
-            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
-
-            // Handle exceptions from Tasks
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
-            // Handle exceptions from other threads
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
         private void ConfigureServices(IServiceCollection services)
@@ -77,63 +69,24 @@ namespace PowersyncDotnetTodoList
 
             // Register ViewModels and Views
             services.AddTransient<TodoListViewModel>();
-            // services.AddTransient<TodoViewModel>();
+            services.AddTransient<TodoViewModel>();
             services.AddTransient<TodoListView>();
-            // services.AddTransient<TodoView>();
+            services.AddTransient<TodoView>();
+            services.AddTransient<MainWindowViewModel>();
+
+
+            // services.AddSingleton<TodoList>();
+            // services.AddSingleton<Todo>();
 
             // Register MainWindow as a singleton
             services.AddSingleton<MainWindow>();
+            // services.AddSingleton<MainWindowViewModel>();
 
             services.AddSingleton<INavigationService>(sp =>
             {
                 var mainWindow = sp.GetRequiredService<MainWindow>();
                 return new NavigationService(mainWindow.MainFrame, sp);
             });
-        }
-
-        private void App_DispatcherUnhandledException(
-            object sender,
-            System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e
-        )
-        {
-            HandleException("UI Thread Exception", e.Exception);
-            e.Handled = true; // Mark as handled to prevent application crash
-        }
-
-        private void TaskScheduler_UnobservedTaskException(
-            object sender,
-            UnobservedTaskExceptionEventArgs e
-        )
-        {
-            HandleException("Background Task Exception", e.Exception);
-            e.SetObserved(); // Mark as observed to prevent application crash
-        }
-
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            HandleException("Critical Exception", e.ExceptionObject as Exception);
-            // Cannot mark as handled - application will likely terminate
-        }
-
-        private void HandleException(string source, Exception ex)
-        {
-            // Log the exception
-            Debug.WriteLine($"{source}: {ex.Message}");
-
-            // You can log to file, database, or error reporting service here
-
-            // Show a user-friendly message
-            MessageBox.Show(
-                $"An error occurred: {ex.Message}\n\nPlease contact support if this issue persists.",
-                "Application Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
-
-            // Additional handling like:
-            // - Send error to telemetry service
-            // - Restart application if needed
-            // - Collect diagnostic information
         }
     }
 }

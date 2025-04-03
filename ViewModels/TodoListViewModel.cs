@@ -81,22 +81,55 @@ namespace PowersyncDotnetTodoList.ViewModels
             LoadTodoLists();
         }
 
-        private async Task LoadTodoLists()
+        private async void LoadTodoLists()
         {
-            var lists = await _db.GetAll<TodoList>("SELECT * FROM lists;");
+            var query =
+                @"
+                    SELECT 
+                        l.*, 
+                        COUNT(t.id) AS total_tasks, 
+                        SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
+                        SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks
+                    FROM 
+                        lists l
+                    LEFT JOIN todos t
+                        ON l.id = t.list_id
+                    GROUP BY 
+                        l.id;
+                ";
+
+            var lists = await _db.GetAll<TodoListWithStats>(query);
             TodoLists.Clear();
-            foreach (var list in lists)
+            if (lists != null && lists.Any())
             {
-                TodoLists.Add(list);
+                foreach (var list in lists)
+                {
+                    TodoLists.Add(list);
+                }
             }
         }
 
         private async void WatchForChanges()
         {
+            var query =
+                @"
+                    SELECT 
+                        l.*, 
+                        COUNT(t.id) AS total_tasks, 
+                        SUM(CASE WHEN t.completed = 1 THEN 1 ELSE 0 END) AS completed_tasks,
+                        SUM(CASE WHEN t.completed = 0 THEN 1 ELSE 0 END) AS pending_tasks
+                    FROM 
+                        lists l
+                    LEFT JOIN todos t
+                        ON l.id = t.list_id
+                    GROUP BY 
+                        l.id;
+                ";
+
             await _db.Watch(
-                "SELECT * FROM lists",
+                query,
                 null,
-                new WatchHandler<TodoList>
+                new WatchHandler<TodoListWithStats>
                 {
                     OnResult = (results) =>
                     {
@@ -126,7 +159,7 @@ namespace PowersyncDotnetTodoList.ViewModels
             try
             {
                 await _db.Execute(
-                    "INSERT INTO lists (id, name, owner_id, created_at) VALUES (uuid(), ?, ?, datetime())",
+                    "INSERT INTO lists (id, name, owner_id, created_at) VALUES (uuid(), ?, ?, datetime());",
                     [newListName, _connector!.UserId]
                 );
             }
@@ -135,7 +168,7 @@ namespace PowersyncDotnetTodoList.ViewModels
 
         private async Task DeleteList(TodoList list)
         {
-            await _db.Execute("DELETE FROM lists WHERE id = ?", [list.id]);
+            await _db.Execute("DELETE FROM lists WHERE id = ?;", [list.id]);
             TodoLists.Remove(list);
         }
 
@@ -144,8 +177,10 @@ namespace PowersyncDotnetTodoList.ViewModels
             if (selectedList != null)
             {
                 // _navigationService.Navigate<TodoViewModel>(selectedList);
+                // // _navigationService.Navigate<TodoViewModel>();
+                // _navigationService.Navigate<TodoViewModel>();
+                _navigationService.Navigate<TodoViewModel>(selectedList);
             }
         }
     }
 }
-
