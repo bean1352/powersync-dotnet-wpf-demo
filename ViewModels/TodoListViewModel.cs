@@ -30,7 +30,7 @@ namespace PowersyncDotnetTodoList.ViewModels
                 }
             }
         }
-        private string _newListName;
+        private string _newListName = "";
         public string NewListName
         {
             get => _newListName;
@@ -130,7 +130,7 @@ namespace PowersyncDotnetTodoList.ViewModels
                     l.id
                 ORDER BY 
                     last_completed_at DESC NULLS LAST;
-";
+                ";
 
             await _db.Watch(
                 query,
@@ -162,14 +162,12 @@ namespace PowersyncDotnetTodoList.ViewModels
 
         private async Task AddList(string newListName)
         {
-            try
-            {
-                await _db.Execute(
-                    "INSERT INTO lists (id, name, owner_id, created_at) VALUES (uuid(), ?, ?, datetime());",
-                    [newListName, _connector!.UserId]
-                );
-            }
-            catch (Exception ex) { }
+            await _db.Execute(
+                "INSERT INTO lists (id, name, owner_id, created_at) VALUES (uuid(), ?, ?, datetime());",
+                [newListName, _connector!.UserId]
+            );
+
+            NewListName = "";
         }
 
         private async Task DeleteList(TodoList list)
@@ -182,9 +180,6 @@ namespace PowersyncDotnetTodoList.ViewModels
         {
             if (selectedList != null)
             {
-                // _navigationService.Navigate<TodoViewModel>(selectedList);
-                // // _navigationService.Navigate<TodoViewModel>();
-                // _navigationService.Navigate<TodoViewModel>();
                 _navigationService.Navigate<TodoViewModel>(selectedList);
             }
         }

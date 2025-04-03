@@ -26,7 +26,7 @@ namespace PowersyncDotnetTodoList.ViewModels
             }
         }
 
-        private string _newTodoName;
+        private string _newTodoName = "";
         public string NewTodoName
         {
             get => _newTodoName;
@@ -40,7 +40,7 @@ namespace PowersyncDotnetTodoList.ViewModels
             }
         }
 
-        private string _listName;
+        private string _listName = "";
         public string ListName
         {
             get => _listName;
@@ -68,7 +68,6 @@ namespace PowersyncDotnetTodoList.ViewModels
             _connector = connector;
             _navigationService = navigationService;
 
-            //AddTodoCommand = new RelayCommand<string>(async (taskName) => await AddTodo(taskName));
             AddTodoCommand = new RelayCommand<string>(
                 async (newTodoName) =>
                 {
@@ -145,6 +144,7 @@ namespace PowersyncDotnetTodoList.ViewModels
                     [todoName, _list!.id]
                 );
                 LoadTodos();
+                NewTodoName = "";
             }
         }
 

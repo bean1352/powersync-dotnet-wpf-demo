@@ -29,9 +29,9 @@
                 BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/> <!-- Input Field -->
-                    <RowDefinition Height="Auto"/> <!-- Add Button -->
-                    <RowDefinition Height="*"/>   <!-- ListBox (Takes remaining space) -->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <!-- Input for new list -->
@@ -66,7 +66,8 @@
                          Background="White"
                          BorderBrush="#CCCCCC"
                          HorizontalAlignment="Stretch"
-                         VerticalAlignment="Stretch">
+                         VerticalAlignment="Stretch"
+                         HorizontalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border Background="#FAFAFA"
@@ -75,19 +76,28 @@
                                     CornerRadius="6"
                                     BorderBrush="#DDDDDD"
                                     BorderThickness="1"
-                                    HorizontalAlignment="Stretch"
-                                    Width="Auto">
-                                <StackPanel Width="Auto">
+                                    HorizontalAlignment="Stretch">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
                                     <!-- List Name -->
-                                    <TextBlock Text="{Binding name}"
+                                    <TextBlock Grid.Row="0"
+                                               Text="{Binding name}"
                                                FontSize="16"
                                                FontWeight="SemiBold"
-                                               Foreground="#333"/>
+                                               Foreground="#333"
+                                               Margin="0,0,0,5"/>
 
-                                    <!-- Task Info -->
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="0,5,0,10">
-                                        <TextBlock FontSize="12" Foreground="#555">
+                                    <!-- List Info -->
+                                    <StackPanel Grid.Row="1"
+                                                Orientation="Horizontal"
+                                                Margin="0,0,0,10">
+                                        <TextBlock FontSize="12"
+                                                   Foreground="#555">
                                             <Run Text="Pending: "/>
                                             <Run Text="{Binding pending_tasks}"/>
                                         </TextBlock>
@@ -99,8 +109,10 @@
                                         </TextBlock>
                                     </StackPanel>
 
-                                    <!-- Buttons -->
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <!-- Delete Button -->
+                                    <StackPanel Grid.Row="2"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Right">
                                         <Button Content="Delete"
                                                 Command="{Binding DataContext.DeleteListCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                                 CommandParameter="{Binding}"
@@ -114,7 +126,7 @@
                                                 Cursor="Hand"
                                                 Margin="5,0,0,0"/>
                                     </StackPanel>
-                                </StackPanel>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

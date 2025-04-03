@@ -6,9 +6,12 @@
 
     <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Back Button -->
-            <RowDefinition Height="Auto"/> <!-- List Name -->
-            <RowDefinition Height="*"/>   <!-- To-Do List Content -->
+            <RowDefinition Height="Auto"/>
+            <!-- Back Button -->
+            <RowDefinition Height="Auto"/>
+            <!-- List Name -->
+            <RowDefinition Height="*"/>
+            <!-- To-Do List Content -->
         </Grid.RowDefinitions>
 
         <!-- Back Button -->
@@ -45,9 +48,12 @@
                 BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/> <!-- Input Field -->
-                    <RowDefinition Height="Auto"/> <!-- Add Button -->
-                    <RowDefinition Height="*"/>   <!-- ListBox (Takes remaining space) -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Input Field -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Add Button -->
+                    <RowDefinition Height="*"/>
+                    <!-- ListBox (Takes remaining space) -->
                 </Grid.RowDefinitions>
 
                 <!-- Input for new to-do -->
@@ -74,7 +80,6 @@
                         BorderThickness="0"
                         Cursor="Hand"
                         Margin="0,0,0,15"/>
-
                 <!-- To-Do Items List -->
                 <ListBox Grid.Row="2"
                          ItemsSource="{Binding Todos}"
@@ -82,7 +87,8 @@
                          Background="White"
                          BorderBrush="#CCCCCC"
                          HorizontalAlignment="Stretch"
-                         VerticalAlignment="Stretch">
+                         VerticalAlignment="Stretch"
+                         HorizontalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border Background="#FAFAFA"
@@ -91,44 +97,58 @@
                                     CornerRadius="6"
                                     BorderBrush="#DDDDDD"
                                     BorderThickness="1"
-                                    HorizontalAlignment="Stretch"
-                                    Width="Auto">
-                                <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            Margin="5">
-                                    
-                                    <!-- Checkbox for completion -->
-                                    <CheckBox IsChecked="{Binding completed}"
-                                              Command="{Binding DataContext.ToggleCompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                              CommandParameter="{Binding}"
-                                              VerticalAlignment="Center"
-                                              Margin="5"/>
+                                    HorizontalAlignment="Stretch">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Task Description -->
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Checkbox + Delete Button -->
+                                    </Grid.RowDefinitions>
 
                                     <!-- Task Description -->
-                                    <TextBlock Text="{Binding description}"
+                                    <TextBlock Grid.Row="0"
+                                               Text="{Binding description}"
                                                FontSize="14"
                                                Foreground="#333"
-                                               VerticalAlignment="Center"
                                                Padding="5"
-                                               Width="Auto"
-                                               TextWrapping="Wrap"/>
+                                               TextWrapping="Wrap"
+                                               Margin="0,0,0,5"/>
 
-                                    <!-- Delete Button -->
-                                    <Button Content="Delete"
-                                            Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                            CommandParameter="{Binding}"
-                                            Width="80"
-                                            Height="30"
-                                            Background="Red"
-                                            Foreground="White"
-                                            FontSize="12"
-                                            FontWeight="Bold"
-                                            BorderThickness="0"
-                                            Cursor="Hand"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Right"/>
-                                </StackPanel>
+                                    <!-- Checkbox and Delete Button Row -->
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- Checkbox -->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- Spacer -->
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- Delete Button -->
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Checkbox for completion -->
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding completed}"
+                                                  Command="{Binding DataContext.ToggleCompleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                  CommandParameter="{Binding}"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,10,0"/>
+
+                                        <!-- Delete Button (Far Right) -->
+                                        <Button Grid.Column="2"
+                                                Content="Delete"
+                                                Command="{Binding DataContext.DeleteTodoCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                CommandParameter="{Binding}"
+                                                Width="80"
+                                                Height="30"
+                                                Background="Red"
+                                                Foreground="White"
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                BorderThickness="0"
+                                                Cursor="Hand"/>
+                                    </Grid>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:PowersyncDotnetTodoList.ViewModels"
         xmlns:conv="clr-namespace:PowersyncDotnetTodoList.Converters"
-        Title="Todo List"
+        Title="Todo Demo"
         Height="750"
         Width="800"
-        FontFamily="Segoe UI">
+        FontFamily="Segoe UI"
+        Icon="Assets/Icons/icon.ico">
 
     <Window.Resources>
         <conv:BoolToStatusConverter x:Key="BoolToStatusConverter"/>
@@ -68,7 +69,7 @@
 
             <!-- App Title (Centered) -->
             <TextBlock Grid.Column="1"
-                       Text="TODO LIST"
+                       Text="TODO LIST DEMO"
                        FontSize="22"
                        FontWeight="Bold"
                        Foreground="White"
@@ -87,9 +88,7 @@
         <!-- Frame for Page Navigation -->
         <Border Grid.Row="2"
                 Background="White"
-                CornerRadius="8"
-                Margin="20,0,20,20"
-                BorderThickness="1">
+                Margin="20,0,20,20">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="1"
                                   Direction="270"
