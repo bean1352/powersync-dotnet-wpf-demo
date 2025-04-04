@@ -52,6 +52,8 @@ namespace PowersyncDotnetTodoList.ViewModels
         #region Commands
         public ICommand AddListCommand { get; }
         public ICommand DeleteListCommand { get; }
+
+        public ICommand SQLConsoleCommand { get; }
         #endregion
 
         #region Constructor
@@ -84,6 +86,7 @@ namespace PowersyncDotnetTodoList.ViewModels
                     }
                 }
             );
+            SQLConsoleCommand = new RelayCommand(GoToSQLConsole);
 
             WatchForChanges();
             LoadTodoLists();
@@ -192,6 +195,12 @@ namespace PowersyncDotnetTodoList.ViewModels
             {
                 _navigationService.Navigate<TodoViewModel>(selectedList);
             }
+        }
+
+        private void GoToSQLConsole()
+        {
+            // Navigate back to the SQLConsole View
+            _navigationService.Navigate<SQLConsoleViewModel>();
         }
         #endregion
     }

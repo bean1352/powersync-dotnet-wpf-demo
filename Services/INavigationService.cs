@@ -22,8 +22,7 @@ namespace PowersyncDotnetTodoList.Services
     {
         private readonly Frame _frame;
         private readonly IServiceProvider _serviceProvider;
-        private readonly Dictionary<Type, Type> _viewModelToViewMappings =
-            new Dictionary<Type, Type>();
+        private readonly Dictionary<Type, Type> _viewModelToViewMappings = [];
 
         public NavigationService(Frame frame, IServiceProvider serviceProvider)
         {
@@ -35,6 +34,7 @@ namespace PowersyncDotnetTodoList.Services
             RegisterMapping<MainWindowViewModel, MainWindow>();
             RegisterMapping<TodoListViewModel, TodoListView>();
             RegisterMapping<TodoViewModel, TodoView>();
+            RegisterMapping<SQLConsoleViewModel, SQLConsoleView>();
         }
 
         public void RegisterMapping<TViewModel, TView>()

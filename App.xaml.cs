@@ -72,8 +72,10 @@ namespace PowersyncDotnetTodoList
             // Register ViewModels and Views
             services.AddTransient<TodoListViewModel>();
             services.AddTransient<TodoViewModel>();
+            services.AddTransient<SQLConsoleViewModel>();
             services.AddTransient<TodoListView>();
             services.AddTransient<TodoView>();
+            services.AddTransient<SQLConsoleView>();
 
             services.AddSingleton<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();

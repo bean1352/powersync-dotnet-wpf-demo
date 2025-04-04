@@ -10,6 +10,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Back Button -->
+        <Button Grid.Row="0"
+                Content="SQL Console"
+                Command="{Binding SQLConsoleCommand}"
+                Width="120"
+                Height="40"
+                Background="#2196F3"
+                Foreground="White"
+                FontSize="14"
+                FontWeight="Bold"
+                BorderThickness="0"
+                Cursor="Hand"
+                HorizontalAlignment="Left"
+                Margin="20,20,0,10"/>
+
         <!-- Header -->
         <TextBlock Grid.Row="0"
                    Text="Your To-Do Lists"

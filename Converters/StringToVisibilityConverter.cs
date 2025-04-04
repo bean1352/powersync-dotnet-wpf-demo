@@ -1,17 +1,16 @@
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PowersyncDotnetTodoList.Converters
 {
-    public class BoolToStatusConverter : IValueConverter
+    public class StringToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool connected)
-            {
-                return connected ? "Connected" : "Disconnected";
-            }
-            return "Disconnected"; // Default if the value isn't a boolean
+            return string.IsNullOrEmpty(value as string)
+                ? Visibility.Collapsed
+                : Visibility.Visible;
         }
 
         public object ConvertBack(
@@ -21,7 +20,7 @@ namespace PowersyncDotnetTodoList.Converters
             CultureInfo culture
         )
         {
-            return value is string str && str == "Connected";
+            return Visibility.Visible;
         }
     }
 }
