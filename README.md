@@ -9,9 +9,7 @@ This is a demo WPF application that showcases how to use the [PowerSync SDK](htt
 ### Prerequisites
 
 Ensure you have the following installed:
-- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
-- [Visual Studio](https://visualstudio.microsoft.com/) with WPF development workload
-- [PowerSync CLI](https://docs.powersync.com/cli/installation)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 
 ### Installation
 
