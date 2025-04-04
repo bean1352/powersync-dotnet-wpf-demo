@@ -87,15 +87,13 @@ namespace PowersyncDotnetTodoList.ViewModels
                 // Fetch results from database
                 var results = await _db.GetAll<object>(SqlQuery, []);
 
-                var f = JsonConvert.SerializeObject(results);
-
                 // Update the collection with the results
                 QueryResults = new ObservableCollection<object>(results);
             }
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;
-                QueryResults = new ObservableCollection<object>();
+                QueryResults = [];
             }
         }
 
