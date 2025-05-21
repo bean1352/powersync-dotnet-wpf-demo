@@ -62,3 +62,5 @@ nunit-*.xml
 fe.pug
 fe/
 
+.env
+

@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
+using DotNetEnv;
 using PowerSync.Common.Client;
 using PowerSync.Common.Client.Connection;
 using PowerSync.Common.DB.Crud;
@@ -23,13 +21,24 @@ public class PowerSyncConnector : IPowerSyncBackendConnector
 
     public PowerSyncConnector()
     {
+        Env.Load();
+
         _httpClient = new HttpClient();
 
         // Load or generate User ID
         UserId = LoadOrGenerateUserId();
 
-        BackendUrl = "http://localhost:6060";
-        PowerSyncUrl = "http://localhost:8080";
+        // Get URLs from environment variables
+        BackendUrl =
+            Environment.GetEnvironmentVariable("BACKEND_URL")
+            ?? throw new Exception(
+                "BACKEND_URL environment variable is not set. Please check your .env file."
+            );
+        PowerSyncUrl =
+            Environment.GetEnvironmentVariable("POWERSYNC_URL")
+            ?? throw new Exception(
+                "POWERSYNC_URL environment variable is not set. Please check your .env file."
+            );
 
         clientId = null;
     }
